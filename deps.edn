@@ -1,8 +1,15 @@
-{:deps
- {io.pedestal/pedestal.service {:mvn/version "0.5.7"}
-  io.pedestal/pedestal.route   {:mvn/version "0.5.7"}
-  io.pedestal/pedestal.jetty   {:mvn/version "0.5.7"}
-  org.clojure/data.json        {:mvn/version "0.2.6"}
-  org.web3j/core               {:mvn/version "4.5.5"}
-  org.slf4j/slf4j-simple       {:mvn/version "1.7.28"}}
- :paths ["src"]}
+{:deps  {io.pedestal/pedestal.service {:mvn/version "0.5.7"}
+         io.pedestal/pedestal.route   {:mvn/version "0.5.7"}
+         io.pedestal/pedestal.jetty   {:mvn/version "0.5.7"}
+         org.clojure/data.json        {:mvn/version "0.2.6"}
+         org.web3j/core               {:mvn/version "4.5.5"}
+         org.slf4j/slf4j-simple       {:mvn/version "1.7.28"}}
+ :mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
+             "clojars" {:url "https://repo.clojars.org/"}}
+ :paths ["src"]
+ :aliases {:uberjar
+           {:extra-deps
+            {luchiniatwork/cambada {:mvn/version "1.0.2"}}
+            :main-opts ["--main" "cambada.uberjar"
+                        "--main" "vm-agent.main"
+                        "--app-version" "0.1.0"]}}}
