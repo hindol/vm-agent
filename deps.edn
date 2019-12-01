@@ -2,9 +2,7 @@
          io.pedestal/pedestal.route   {:mvn/version "0.5.7"}
          io.pedestal/pedestal.jetty   {:mvn/version "0.5.7"}
          org.clojure/core.async       {:mvn/version "0.5.527"}
-         org.clojure/data.json        {:mvn/version "0.2.6"}
          clj-http                     {:mvn/version "3.10.0"}
          cheshire                     {:mvn/version "5.9.0"}
-         org.web3j/core               {:mvn/version "4.5.5"}
          org.slf4j/slf4j-simple       {:mvn/version "1.7.28"}}
  :paths ["src"]}

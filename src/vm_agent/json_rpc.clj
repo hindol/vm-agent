@@ -32,7 +32,7 @@
     :enter (fn [context]
              (async/go
                (let [request    (:request context)
-                     connection (:besu-connection request)
+                     connection (:json-rpc-connection request)
                      method     (:json-rpc-method request)
                      params     (:json-rpc-params request)
                      response   (apply call connection method params)]
