@@ -5,7 +5,7 @@
 
 (def connection "http://localhost:8545")
 
-(defn interceptor
+(defn- interceptor
   [method & params]
   (intc/interceptor
    {:name ::interceptor
@@ -29,6 +29,27 @@
   {:name ::read-accounts
    :enter (fn [context]
             (chain/enqueue* context (interceptor "eth_accounts")))})
+
+(def read-peers
+  {:name ::read-peers
+   :enter (fn [context]
+            (chain/enqueue* context (interceptor "admin_peers")))})
+
+(def add-peer
+  {:name ::add-peer
+   :enter (fn [context]
+            (let [request     (:request context)
+                  json-params (:json-params request)
+                  enode-url   (:enode-url json-params)]
+              (chain/enqueue* context (interceptor "admin_addPeer" enode-url))))})
+
+(def remove-peer
+  {:name ::remove-peer
+   :enter (fn [context]
+            (let [request     (:request context)
+                  json-params (:json-params request)
+                  enode-url   (:enode-url json-params)]
+              (chain/enqueue* context (interceptor "admin_removePeer" enode-url))))})
 
 (def read-validators
   {:name ::read-validators

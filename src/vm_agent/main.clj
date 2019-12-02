@@ -2,6 +2,7 @@
   (:require [cheshire.core :as json]
             [io.pedestal.http :as http]
             [io.pedestal.http.route :as route]
+            [io.pedestal.http.body-params :as body-params]
             [io.pedestal.http.content-negotiation :as conneg]
             [io.pedestal.test :as test]
             [vm-agent.besu :as besu])
@@ -52,15 +53,16 @@
             (let [response (ok context)]
               (assoc context :response response)))})
 
-(def common-interceptors [coerce-body content-neg-intc])
+(def common-interceptors [coerce-body content-neg-intc (body-params/body-params)])
 
 (def routes
   (route/expand-routes
    #{["/block-number"   :get    (conj common-interceptors besu/read-block-number)]
      ["/public-key"     :get    echo :route-name :read-public-key]
      ["/accounts"       :get    (conj common-interceptors besu/read-accounts)]
-     ["/peers"          :get    echo :route-name :read-peers]
-     ["/peers/:id"      :put    echo :route-name :add-peer]
+     ["/peers"          :get    (conj common-interceptors besu/read-peers)]
+     ["/peers/:id"      :put    (conj common-interceptors besu/add-peer)]
+     ["/peers/:id"      :delete (conj common-interceptors besu/remove-peer)]
      ["/validators"     :get    (conj common-interceptors besu/read-validators)]
      ["/validators/:id" :put    echo :route-name :add-validator]
      ["/validators/:id" :delete echo :route-name :remove-validator]}))

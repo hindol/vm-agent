@@ -20,9 +20,11 @@
 
 (defn call
   [connection method & params]
-  (->> {:form-params  (wrap-request method params)
-        :content-type :json
-        :as           :json}
+  (->> {:form-params      (wrap-request method params)
+        :content-type     :json
+        :as               :json
+        :coerce           :always
+        :throw-exceptions false}
        (client/post connection)
        (unwrap-response)))
 
