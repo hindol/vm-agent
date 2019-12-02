@@ -1,10 +1,9 @@
-(ns vm-agent.main
+(ns vm-agent.service
   (:require [cheshire.core :as json]
             [io.pedestal.http :as http]
             [io.pedestal.http.route :as route]
             [io.pedestal.http.body-params :as body-params]
             [io.pedestal.http.content-negotiation :as conneg]
-            [io.pedestal.test :as test]
             [vm-agent.besu :as besu])
   (:gen-class))
 
@@ -71,34 +70,3 @@
   {::http/routes routes
    ::http/type   :jetty
    ::http/port   8890})
-
-(defn start
-  []
-  (http/start (http/create-server service-map)))
-
-;; For interactive development
-(defonce server (atom nil))
-
-(defn start-dev
-  []
-  (reset! server
-          (http/start (http/create-server
-                       (assoc service-map
-                              ::http/join? false)))))
-
-(defn stop-dev
-  []
-  (http/stop @server))
-
-(defn restart
-  []
-  (stop-dev)
-  (start-dev))
-
-(defn test-request
-  [verb url]
-  (io.pedestal.test/response-for (::http/service-fn @server) verb url))
-
-(defn -main
-  [& _]
-  (start))
