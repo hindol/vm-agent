@@ -57,7 +57,8 @@
 (def routes
   (route/expand-routes
    #{["/besu/block-number" :get    (conj common-interceptors besu/read-block-number)]
-     ["/besu/public-key"   :get    echo :route-name :read-public-key]
+     ["/besu/public-key"   :get    (conj common-interceptors besu/read-public-key)]
+     ["/besu/enode-url"    :get    (conj common-interceptors besu/read-enode-url)]
      ["/besu/accounts/"    :get    (conj common-interceptors besu/read-accounts)]
      ["/besu/peers/"       :get    (conj common-interceptors besu/read-peers)]
      ["/besu/peers/"       :post   (conj common-interceptors besu/add-peer)]
