@@ -56,15 +56,15 @@
 
 (def routes
   (route/expand-routes
-   #{["/block-number"   :get    (conj common-interceptors besu/read-block-number)]
-     ["/public-key"     :get    echo :route-name :read-public-key]
-     ["/accounts"       :get    (conj common-interceptors besu/read-accounts)]
-     ["/peers"          :get    (conj common-interceptors besu/read-peers)]
-     ["/peers/:id"      :put    (conj common-interceptors besu/add-peer)]
-     ["/peers/:id"      :delete (conj common-interceptors besu/remove-peer)]
-     ["/validators"     :get    (conj common-interceptors besu/read-validators)]
-     ["/validators/:id" :put    echo :route-name :add-validator]
-     ["/validators/:id" :delete echo :route-name :remove-validator]}))
+   #{["/besu/block-number" :get    (conj common-interceptors besu/read-block-number)]
+     ["/besu/public-key"   :get    echo :route-name :read-public-key]
+     ["/besu/accounts/"    :get    (conj common-interceptors besu/read-accounts)]
+     ["/besu/peers/"       :get    (conj common-interceptors besu/read-peers)]
+     ["/besu/peers/"       :post   (conj common-interceptors besu/add-peer)]
+     ["/besu/peers/"       :delete (conj common-interceptors besu/remove-peer)]
+     ["/besu/validators/"  :get    (conj common-interceptors besu/read-validators)]
+     ["/besu/validators/"  :post   (conj common-interceptors besu/add-validator)]
+     ["/besu/validators/"  :delete (conj common-interceptors besu/remove-validator)]}))
 
 (def service-map
   {::http/routes routes

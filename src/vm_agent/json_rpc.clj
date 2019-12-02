@@ -3,7 +3,9 @@
             [io.pedestal.interceptor :as intc]
             [clj-http.client :as client]))
 
-(def version "2.0")
+(def version
+  "JSON-RPC protocol version."
+  "2.0")
 
 (defn- wrap-request
   [method params]
@@ -18,7 +20,7 @@
       (select-keys [:status :body])
       (update-in [:body] dissoc :jsonrpc :id)))
 
-(defn call
+(defn- call
   [connection method & params]
   (->> {:form-params      (wrap-request method params)
         :content-type     :json
@@ -28,14 +30,12 @@
        (client/post connection)
        (unwrap-response)))
 
-(def interceptor
+(defn interceptor
+  "Generates and returns a Pedestal interceptor for the given JSON-RPC method and its parameters."
+  [connection method & params]
   (intc/interceptor
    {:name ::interceptor
     :enter (fn [context]
              (async/go
-               (let [request    (:request context)
-                     connection (:json-rpc-connection request)
-                     method     (:json-rpc-method request)
-                     params     (:json-rpc-params request)
-                     response   (apply call connection method params)]
+               (let [response (apply call connection method params)]
                  (assoc context :response response))))}))
