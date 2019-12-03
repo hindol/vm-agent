@@ -4,12 +4,14 @@
             [io.pedestal.http.route :as route]
             [io.pedestal.http.body-params :as body-params]
             [io.pedestal.http.content-negotiation :as conneg]
-            [vm-agent.besu :as besu])
-  (:gen-class))
+            [vm-agent.besu :as besu]))
 
 (def supported-types ["text/html" "application/edn" "application/json" "text/plain"])
 
-(def content-neg-intc (conneg/negotiate-content supported-types))
+(def content-neg-intc
+  "An interceptor that does content negotiation with the client.
+  Attaches the most acceptable response format to the key :accept in the request map."
+  (conneg/negotiate-content supported-types))
 
 (defn accepted-type
   [context]
@@ -52,7 +54,9 @@
             (let [response (ok context)]
               (assoc context :response response)))})
 
-(def common-interceptors [coerce-body content-neg-intc (body-params/body-params)])
+(def common-interceptors
+  "Common interceptors for every routes."
+  [coerce-body content-neg-intc (body-params/body-params)])
 
 (def routes
   (route/expand-routes
@@ -60,15 +64,16 @@
      ["/besu/syncing"      :get    (conj common-interceptors besu/syncing)]
      ["/besu/public-key"   :get    (conj common-interceptors besu/read-public-key)]
      ["/besu/enode-url"    :get    (conj common-interceptors besu/read-enode-url)]
-     ["/besu/accounts"     :get    (conj common-interceptors besu/read-accounts)]
-     ["/besu/peers"        :get    (conj common-interceptors besu/read-peers)]
-     ["/besu/peers"        :post   (conj common-interceptors besu/add-peer)]
-     ["/besu/peers"        :delete (conj common-interceptors besu/remove-peer)]
-     ["/besu/validators"   :get    (conj common-interceptors besu/read-validators)]
-     ["/besu/validators"   :post   (conj common-interceptors besu/add-validator)]
-     ["/besu/validators"   :delete (conj common-interceptors besu/remove-validator)]}))
+     ["/besu/accounts/"    :get    (conj common-interceptors besu/read-accounts)]
+     ["/besu/peers/"       :get    (conj common-interceptors besu/read-peers)]
+     ["/besu/peers/"       :post   (conj common-interceptors besu/add-peer)]
+     ["/besu/peers/"       :delete (conj common-interceptors besu/remove-peer)]
+     ["/besu/validators/"  :get    (conj common-interceptors besu/read-validators)]
+     ["/besu/validators/"  :post   (conj common-interceptors besu/add-validator)]
+     ["/besu/validators/"  :delete (conj common-interceptors besu/remove-validator)]}))
 
 (def service-map
   {::http/routes routes
    ::http/type   :jetty
+   ::http/host   "0.0.0.0"
    ::http/port   8890})
