@@ -81,4 +81,21 @@
 (square 2)                    ;; => 4
 ```
 
-### The Essence of a Functional Language, Pure Functions
+### The Essence of a Functional Language, [Pure Functions](https://en.wikipedia.org/wiki/Pure_function)
+
+*Definition:* A function that has no side-effects. Calling the function any number of times with the same input value will give the same output value.
+
+- In the above example, `square` is a pure function. No matter how many times you call it with the value 2, the output will be 4.
+- A function that debits money from a bank account is not a pure function.
+- Printing to the console *is* a side-effect. It changes the state of `stdout`. So is writing to a file.
+- Clojure is built around pure functions.
+
+#### Example
+
+```clojure
+(def a-map {:one 1 :two 2 :three 3})
+(assoc a-map :four 4)                ;; => {:one 1 :two 2 :three 3 :four 4}
+a-map                                ;; => {:one 1 :two 2 :three 3}
+```
+
+- `assoc`(iate) takes a map, adds an entry and returns *another* map. The original map is not modified.
