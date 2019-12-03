@@ -37,8 +37,8 @@
 (nth [1 "two" 3.0] 2) ;; => 3.0
 
 #{1 "two" 3.0}                 ;; => A set
-(contains? #{1 "two" 3.0} 2.0) ;; false
-(#{1 "two" 3.0} 2.0)           ;; false
+(contains? #{1 "two" 3.0} 2.0) ;; => false
+(#{1 "two" 3.0} 2.0)           ;; => false
 ```
 
 - Collections in Clojure are not *typed*. Much like Python.
