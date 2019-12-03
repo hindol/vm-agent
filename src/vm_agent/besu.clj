@@ -17,6 +17,12 @@
    :enter (fn [context]
             (chain/enqueue* context (json-rpc/interceptor connection "eth_blockNumber")))})
 
+(def syncing
+  "Returns an object with data about the synchronization status, or false if not synchronizing."
+  {:name ::syncing
+   :enter (fn [context]
+            (chain/enqueue* context (json-rpc/interceptor connection "eth_syncing")))})
+
 (def read-public-key
   "Returns the node public key."
   {:name ::read-public-key
