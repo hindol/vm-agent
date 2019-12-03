@@ -1,8 +1,12 @@
-{:deps  {io.pedestal/pedestal.service {:mvn/version "0.5.7"}
-         io.pedestal/pedestal.route   {:mvn/version "0.5.7"}
-         io.pedestal/pedestal.jetty   {:mvn/version "0.5.7"}
-         org.clojure/core.async       {:mvn/version "0.5.527"}
-         clj-http                     {:mvn/version "3.10.0"}
-         cheshire                     {:mvn/version "5.9.0"}
-         org.slf4j/slf4j-simple       {:mvn/version "1.7.28"}}
- :paths ["src"]}
+{:deps    {io.pedestal/pedestal.service {:mvn/version "0.5.7"}
+           io.pedestal/pedestal.route   {:mvn/version "0.5.7"}
+           io.pedestal/pedestal.jetty   {:mvn/version "0.5.7"}
+           org.clojure/core.async       {:mvn/version "0.5.527"}
+           clj-http                     {:mvn/version "3.10.0"}
+           cheshire                     {:mvn/version "5.9.0"}
+           org.slf4j/slf4j-simple       {:mvn/version "1.7.28"}}
+ :paths   ["src"]
+ :aliases {:pack
+           {:extra-deps {pack/pack.alpha {:git/url "https://github.com/juxt/pack.alpha.git"
+                                          :sha     "2769a6224bfb938e777906ea311b3daf7d2220f5"}}
+            :main-opts  ["-m"]}}}
