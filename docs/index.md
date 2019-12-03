@@ -99,3 +99,9 @@ a-map                                ;; => {:one 1 :two 2 :three 3}
 ```
 
 - `assoc`(iate) takes a map, adds an entry and returns *another* map. The original map is not modified.
+
+### Type when It's (Really) Needed (clojure.spec)
+
+### If, When, Loop/Recur (Tail Recursion), Cond
+
+### Can we Now Understand Clojure Code in the Wild?
