@@ -14,3 +14,10 @@ steps:
     curl -s https://download.clojure.org/install/linux-install-1.10.1.492.sh | sudo bash
     /usr/local/bin/clojure -A:pack mach.pack.alpha.jib --image-name $DOCKER_REGISTRY/vm-agent:0.1.0 --image-type docker -m vm-agent.server
   displayName: 'Create Docker image from Clojure source'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'yaravich'
+    repository: 'vm-agent'
+    command: 'push'
+    tags: '$(version)'
