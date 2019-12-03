@@ -14,7 +14,10 @@ This project features,
 
 - Build the project and create a Docker image in one step,
 
-        > clojure -A:pack mach.pack.alpha.jib --image-name $DOCKER_REGISTRY/vm-agent:0.1.0 --image-type docker -m vm-agent.server
+        > clojure -A:pack mach.pack.alpha.jib \
+                  --image-name $DOCKER_REGISTRY/vm-agent:0.1.0 \
+                  --image-type docker \
+                  -m vm-agent.server
 
     `$DOCKER_REGISTRY` is any registry where you want to host the image. For [Azure Container Registry](https://azure.microsoft.com/en-in/services/container-registry/), use `<registry>.azurecr.io`.
 
