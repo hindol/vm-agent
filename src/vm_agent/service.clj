@@ -60,17 +60,18 @@
 
 (def routes
   (route/expand-routes
-   #{["/besu/block-number" :get    (conj common-interceptors besu/read-block-number)]
-     ["/besu/syncing"      :get    (conj common-interceptors besu/syncing)]
-     ["/besu/public-key"   :get    (conj common-interceptors besu/read-public-key)]
-     ["/besu/enode-url"    :get    (conj common-interceptors besu/read-enode-url)]
-     ["/besu/accounts/"    :get    (conj common-interceptors besu/read-accounts)]
-     ["/besu/peers/"       :get    (conj common-interceptors besu/read-peers)]
-     ["/besu/peers/"       :post   (conj common-interceptors besu/add-peer)]
-     ["/besu/peers/"       :delete (conj common-interceptors besu/remove-peer)]
-     ["/besu/validators/"  :get    (conj common-interceptors besu/read-validators)]
-     ["/besu/validators/"  :post   (conj common-interceptors besu/add-validator)]
-     ["/besu/validators/"  :delete (conj common-interceptors besu/remove-validator)]}))
+   #{["/besu/block-number"         :get    (conj common-interceptors besu/read-block-number)]
+     ["/besu/syncing"              :get    (conj common-interceptors besu/syncing)]
+     ["/besu/public-key"           :get    (conj common-interceptors besu/read-public-key)]
+     ["/besu/enode-url"            :get    (conj common-interceptors besu/read-enode-url)]
+     ["/besu/accounts/"            :get    (conj common-interceptors besu/read-accounts)]
+     ["/besu/peers/"               :get    (conj common-interceptors besu/read-peers)]
+     ["/besu/peers/"               :post   (conj common-interceptors besu/add-peer)]
+     ["/besu/peers/"               :delete (conj common-interceptors besu/remove-peer)]
+     ["/besu/validators/"          :get    (conj common-interceptors besu/read-validators)]
+     ["/besu/validators/"          :post   (conj common-interceptors besu/add-validator)]
+     ["/besu/validators/"          :delete (conj common-interceptors besu/remove-validator)]
+     ["/besu/send-raw-transaction" :post   (conj common-interceptors besu/send-raw-transaction)]}))
 
 (def service-map
   {::http/routes routes

@@ -24,7 +24,9 @@
             (chain/enqueue* context (json-rpc/interceptor connection "eth_syncing")))})
 
 (def read-public-key
-  "Returns the node public key."
+  "Returns the node public key.
+  Internally, this function calls the net_enode method which returns the enode-url.
+  We then extract the public key from the enode URL."
   {:name ::read-public-key
    :enter (fn [context]
             (chain/enqueue* context (json-rpc/interceptor connection "net_enode")))
@@ -64,7 +66,7 @@
   ```"
   {:name ::add-peer
    :enter (fn [context]
-            (let [enode-url (get-in context [:request :json-params :enode-url])]
+            (let [{{{enode-url :enode-url} :json-params} :request} context]
               (chain/enqueue* context (json-rpc/interceptor connection "admin_addPeer" enode-url))))})
 
 (def remove-peer
@@ -80,7 +82,7 @@
   ```"
   {:name ::remove-peer
    :enter (fn [context]
-            (let [enode-url (get-in context [:request :json-params :enode-url])]
+            (let [{{{enode-url :enode-url} :json-params} :request} context]
               (chain/enqueue* context (json-rpc/interceptor connection "admin_removePeer" enode-url))))})
 
 (def read-validators
@@ -94,12 +96,22 @@
   "Proposes adding a validator with the specified address."
   {:name ::add-validator
    :enter (fn [context]
-            (let [enode-address (get-in context [:request :json-params :enode-address])]
-              (chain/enqueue* context (json-rpc/interceptor connection "ibft_proposeValidatorVote" enode-address true))))})
+            (let [{{{enode-address :enode-url} :json-params} :request} context]
+              (chain/enqueue* context
+                              (json-rpc/interceptor connection "ibft_proposeValidatorVote" enode-address true))))})
 
 (def remove-validator
   "Proposes removing a validator with the specified address."
   {:name ::remove-validator
    :enter (fn [context]
-            (let [enode-address (get-in context [:request :json-params :enode-address])]
-              (chain/enqueue* context (json-rpc/interceptor connection "ibft_proposeValidatorVote" enode-address false))))})
+            (let [{{{enode-address :enode-url} :json-params} :request} context]
+              (chain/enqueue* context
+                              (json-rpc/interceptor connection "ibft_proposeValidatorVote" enode-address false))))})
+
+(def send-raw-transaction
+  "Sends a signed transaction. A transaction can send ether, deploy a contract, or interact with a contract."
+  {:name ::send-raw-transaction
+   :enter (fn [context]
+            (let [{{{transaction :enode-url} :json-params} :request} context]
+              (chain/enqueue* context
+                              (json-rpc/interceptor connection "eth_sendRawTransaction" transaction))))})
