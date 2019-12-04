@@ -62,3 +62,7 @@ Currently, these APIs are exposed,
 ```
 
 Take a look at the [handlers](src/vm_agent/besu.clj). The code is well documented.
+
+## Clojure Crash Course
+
+Check out [Clojure in 15 Minutes](https://hindol.github.io/vm-agent/#clojure-in-15-minutes).
