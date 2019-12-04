@@ -130,8 +130,8 @@ a-map                                ;; => {:one 1 :two 2 :three 3}
 ### If & When
 
 ```clojure
-(if   true "true" "false") ;; => "true"
-(when false "true")        ;; => nil
+(if   true  "true" "false") ;; => "true"
+(when false "true")         ;; => nil
 ```
 
 - Use `if` when there is also an else part.
