@@ -30,10 +30,10 @@
 - Arithmatic operators in Clojure support more than two operands.
 - `(f (g x))` => Call function `g` with argument `x`. Then call function `f` with the result of the previous function as argument.
 
-### Lists & Sets
+### Vectors & Sets
 
 ```clojure
-[1 "two" 3.0]         ;; => A list
+[1 "two" 3.0]         ;; => A vector
 (nth [1 "two" 3.0] 2) ;; => 3.0
 
 #{1 "two" 3.0}                 ;; => A set
@@ -81,6 +81,25 @@
 (square 2)                    ;; => 4
 ```
 
+### Macros
+
+```clojure
+(defn square [x] (* x x))
+```
+
+- This gets re-written as `(def square (fn [x] (* x x)))` before evaluation.
+- Think `#define` in `C/C++` but macros are much more powerful.
+
+```clojure
+(-> x        ;; The thread-first macro
+    (square)
+    (cube))
+```
+
+- This gets re-written as `(cube (square x))` before evaluation.
+- The thread-first macro `(->)` threads the previous result as the *first* parameter of the next function.
+- Similarly, the thead-last macro `(->>)` threads the previous result as the *last* parameter of the next function.
+
 ### The Essence of a Functional Language, [Pure Functions](https://en.wikipedia.org/wiki/Pure_function)
 
 *Definition:* A function that has no side-effects. Calling the function any number of times with the same input value will give the same output value.
@@ -93,6 +112,14 @@
 #### Example
 
 ```clojure
+(def a-vector [1 "two" 3.0])
+(conj a-vector :four)        ;; [1 "two" 3.0 :four]
+a-vector                     ;; [1 "two" 3.0]
+```
+
+- `conj`(ugate) takes a vector, adds an entry at the end and returns *another* vector. The original vector is not modified.
+
+```clojure
 (def a-map {:one 1 :two 2 :three 3})
 (assoc a-map :four 4)                ;; => {:one 1 :two 2 :three 3 :four 4}
 a-map                                ;; => {:one 1 :two 2 :three 3}
@@ -100,8 +127,29 @@ a-map                                ;; => {:one 1 :two 2 :three 3}
 
 - `assoc`(iate) takes a map, adds an entry and returns *another* map. The original map is not modified.
 
+### If & When
+
+```clojure
+(if true "true" "false") ;; => "true"
+(when false "true")      ;; => nil
+```
+
+- Use `if` when there is also an else part.
+- Use `when` otherwise.
+- `nil` is what `null` is in other languages or `None` in Python.
+
+### Cond
+
+```clojure
+(cond
+  (odd?  x) "x is odd"
+  (even? x) "x is even")
+```
+
+- `cond` is what `switch/case` is in other languages.
+
 ### Type when It's (Really) Needed (clojure.spec)
 
-### If, When, Loop/Recur (Tail Recursion), Cond
+### Loop/Recur (Tail Recursion)
 
 ### Can we Now Understand Clojure Code in the Wild?
