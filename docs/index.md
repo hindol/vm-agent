@@ -117,7 +117,7 @@
 a-vector                     ;; [1 "two" 3.0]
 ```
 
-- `conj`(ugate) takes a vector, adds an entry at the end and returns *another* vector. The original vector is not modified.
+- `conj`(oin) takes a vector, adds an entry at the end and returns *another* vector. The original vector is not modified.
 
 ```clojure
 (def a-map {:one 1 :two 2 :three 3})
