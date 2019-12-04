@@ -153,6 +153,8 @@ a-map                                ;; => {:one 1 :two 2 :three 3}
 ```clojure
 (let [x 10]
   (println "x is: " x)) ;; => x is: 10
+
+(println "x is: " x)      ;; Unable to resolve symbol: x in this context
 ```
 
 - Like `def` but the binding is only available within the form `(let ...)`.
@@ -169,6 +171,11 @@ a-map                                ;; => {:one 1 :two 2 :three 3}
       acc)))                    ; The current stack is replaced with the
                                 ; new stack, so no stack overflow.
 ```
+
+- `(> n 1)` => `n > 1` in other languages.
+- `(< 0 x 11)` => Check if `x` is between 0 and 11 (both exclusive).
+- `(= x y z)` => Check that `x`, `y` and `z` are all equal.
+- Most operators in Clojure allow more than two operands.
 
 ### Type when It's (Really) Needed (clojure.spec)
 
