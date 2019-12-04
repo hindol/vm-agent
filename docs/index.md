@@ -27,7 +27,7 @@
 (float (/ 10)) ;; => 0.1
 ```
 
-- Arithmatic operators in Clojure support more than two operands.
+- Arithmetic operators in Clojure support more than two operands.
 - `(f (g x))` => Call function `g` with argument `x`. Then call function `f` with the result of the previous function as argument.
 
 ### Vectors & Sets
@@ -130,8 +130,8 @@ a-map                                ;; => {:one 1 :two 2 :three 3}
 ### If & When
 
 ```clojure
-(if true "true" "false") ;; => "true"
-(when false "true")      ;; => nil
+(if   true "true" "false") ;; => "true"
+(when false "true")        ;; => nil
 ```
 
 - Use `if` when there is also an else part.
