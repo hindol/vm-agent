@@ -148,8 +148,28 @@ a-map                                ;; => {:one 1 :two 2 :three 3}
 
 - `cond` is what `switch/case` is in other languages.
 
-### Type when It's (Really) Needed (clojure.spec)
+### Local Bindings
 
-### Loop/Recur (Tail Recursion)
+```clojure
+(let [x 10]
+  (println "x is: " x)) ;; => x is: 10
+```
+
+- Like `def` but the binding is only available within the form `(let ...)`.
+
+### Loop & Recur
+
+```clojure
+(defn factorial
+  [x]
+  (loop [n   x                  ;; "n" is locally bound to "x"
+         acc 1]
+    (if (> n 1)
+      (recur (dec n) (* acc n)) ; Re-run the "loop" with new arguments.
+      acc)))                    ; The current stack is replaced with the
+                                ; new stack, so no stack overflow.
+```
+
+### Type when It's (Really) Needed (clojure.spec)
 
 ### Can we Now Understand Clojure Code in the Wild?
