@@ -127,6 +127,27 @@ a-map                                ;; => {:one 1 :two 2 :three 3}
 
 - `assoc`(iate) takes a map, adds an entry and returns *another* map. The original map is not modified.
 
+### Map, Filter & Reduce
+
+```clojure
+(defn root-mean-square
+  [xs]                             ;; A collection in Clojure is usually named xs, ys etc.
+  (let [n       (count xs)
+        squares (map square xs)    ;; => (1 4 9)
+        sum     (reduce + squares) ;; => 14
+        mean    (/ sum n)]         ;; => 4.666666666666667
+    (Math/sqrt mean))              ;; => 2.160246899469287
+
+(root-mean-square [1 2 3])         ;; Results at each step shown above.
+```
+
+- `(Math/sqrt mean)` => Calls Java `Math.sqrt`. Clojure runs on the JVM and has access to the complete Java ecosystem.
+- `reduce` reduces a collection to a single value.
+
+```clojure
+(filter odd? [1 2 3 4 5 6 7 8 9 10]) ;; => [1 3 5 7 9]
+```
+
 ### If & When
 
 ```clojure
