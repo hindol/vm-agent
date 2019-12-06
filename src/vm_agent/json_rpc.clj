@@ -1,7 +1,7 @@
 (ns vm-agent.json-rpc
   (:require [clojure.core.async :as async]
             [io.pedestal.interceptor :as intc]
-            [clj-http.client :as client]))
+            [vm-agent.http :as http]))
 
 (def version
   "JSON-RPC protocol version."
@@ -22,12 +22,8 @@
 
 (defn- call
   [connection method & params]
-  (->> {:form-params      (wrap-request method params)
-        :content-type     :json
-        :as               :json
-        :coerce           :always
-        :throw-exceptions false}
-       (client/post connection)
+  (->> (wrap-request method params)
+       (http/post http/clj-http connection)
        (unwrap-response)))
 
 (defn interceptor
