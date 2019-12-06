@@ -10,6 +10,8 @@
   (post [this url body]
     (client/post url (merge options {:form-params body}))))
 
+; An implementation of [[HttpClient]] that uses `clj-http` to make
+; the actual requests. 
 (def clj-http
   (->CljHttpClient {:content-type     :json
                     :as               :json

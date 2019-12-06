@@ -1,42 +1,9 @@
 (ns vm-agent.service
-  (:require [cheshire.core :as json]
-            [io.pedestal.http :as http]
+  (:require [io.pedestal.http :as http]
             [io.pedestal.http.route :as route]
             [io.pedestal.http.body-params :as body-params]
-            [io.pedestal.http.content-negotiation :as conneg]
+            [vm-agent.content-negotiation :as conneg]
             [vm-agent.besu :as besu]))
-
-(def supported-types ["text/html" "application/edn" "application/json" "text/plain"])
-
-(def content-neg-intc
-  "An interceptor that does content negotiation with the client.
-  Attaches the most acceptable response format to the key :accept in the request map."
-  (conneg/negotiate-content supported-types))
-
-(defn accepted-type
-  [context]
-  (get-in context [:request :accept :field] "text/plain"))
-
-(defn transform-content
-  [body content-type]
-  (case content-type
-    "text/html" body
-    "text/plain" body
-    "application/edn" (pr-str body)
-    "application/json" (json/generate-string body)))
-
-(defn coerce-to
-  [response content-type]
-  (-> response
-      (update :body transform-content content-type)
-      (assoc-in [:headers "Content-Type"] content-type)))
-
-(def coerce-body
-  {:name  ::coerce-body
-   :leave (fn [context]
-            (cond-> context
-              (nil? (get-in context [:response :headers "Content-Type"]))
-              (update-in [:response] coerce-to (accepted-type context))))})
 
 (defn response
   [status body & {:as headers}]
@@ -56,7 +23,7 @@
 
 (def common-interceptors
   "Common interceptors for every routes."
-  [coerce-body content-neg-intc (body-params/body-params)])
+  [conneg/coerce-body conneg/negotiate (body-params/body-params)])
 
 (def routes
   (route/expand-routes
