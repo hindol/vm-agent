@@ -3,6 +3,7 @@
             [io.pedestal.http.route :as route]
             [io.pedestal.http.body-params :as body-params]
             [vm-agent.content-negotiation :as conneg]
+            [vm-agent.error :as error]
             [vm-agent.besu :as besu]))
 
 (defn response
@@ -23,7 +24,7 @@
 
 (def common-interceptors
   "Common interceptors for every routes."
-  [conneg/coerce-body conneg/negotiate (body-params/body-params)])
+  [conneg/coerce-body conneg/negotiate (body-params/body-params) error/interceptor])
 
 (def routes
   (route/expand-routes

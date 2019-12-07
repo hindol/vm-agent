@@ -1,6 +1,5 @@
 (ns vm-agent.json-rpc
-  (:require [clojure.core.async :as async]
-            [io.pedestal.interceptor :as intc]
+  (:require [io.pedestal.interceptor :as intc]
             [vm-agent.http :as http]))
 
 (def ^:private ^:const version
@@ -32,6 +31,5 @@
   (intc/interceptor
    {:name ::interceptor
     :enter (fn [context]
-             (async/go
-               (let [response (apply call connection method params)]
-                 (assoc context :response response))))}))
+             (let [response (apply call connection method params)]
+               (assoc context :response response)))}))
