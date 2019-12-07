@@ -3,7 +3,7 @@
             [io.pedestal.interceptor :as intc]
             [vm-agent.http :as http]))
 
-(def version
+(def ^:private ^:const version
   "JSON-RPC protocol version."
   "2.0")
 

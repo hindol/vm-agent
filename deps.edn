@@ -2,11 +2,11 @@
            io.pedestal/pedestal.route   {:mvn/version "0.5.7"}
            io.pedestal/pedestal.jetty   {:mvn/version "0.5.7"}
            org.clojure/core.async       {:mvn/version "0.5.527"}
-           ring/ring-spec               {:mvn/version "0.0.4"}
+           environ                      {:mvn/version "1.1.0"}
            clj-http                     {:mvn/version "3.10.0"}
            cheshire                     {:mvn/version "5.9.0"}
            org.slf4j/slf4j-simple       {:mvn/version "1.7.28"}}
- :paths   ["src"]
+ :paths   ["src" "resources"]
  :aliases {:test {:extra-paths ["test"]
                   :extra-deps  {com.cognitect/test-runner
                                 {:git/url "https://github.com/cognitect-labs/test-runner.git"
