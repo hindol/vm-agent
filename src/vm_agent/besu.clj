@@ -30,7 +30,7 @@
   ```"
   {:name ::read-genesis
    :enter (fn [context]
-            (assoc context :response {:status 200 :body (slurp "/etc/besu/genesis.json")}))})
+            (assoc context :response {:status 200 :body (slurp (:besu-genesis-file config/dev))}))})
 
 (def create-genesis
   "Seeds the genesis.json with initial set of validators.
@@ -47,7 +47,7 @@
    :enter (fn [context]
             (let [{{{validators :validators} :json-params} :request} context
                   validators (map trim-0x-prefix validators)]
-              (spit "/etc/besu/seed-validators.json" (json/generate-string validators))))})
+              (spit (:besu-validators-file config/dev) (json/generate-string validators))))})
 
 (def read-block-number
   "Returns the index corresponding to the block number of the current chain head.

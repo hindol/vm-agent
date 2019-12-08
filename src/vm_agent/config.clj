@@ -3,7 +3,7 @@
             [clojure.edn :as edn]
             [environ.core :refer [env]]))
 
-(defn- parse-int
+(defn- str->int
   "Wrapper around Java's [[Integer/parseInt]]."
   [s]
   (Integer/parseInt s))
@@ -13,13 +13,15 @@
   if parsing fails."
   [s]
   (try
-    (parse-int s)
+    (str->int s)
     (catch NumberFormatException _))) ;; Swallow exception
 
 (defn from-env
   []
   {:besu-host (env :besu-host)
-   :besu-port (try-parse-int (env :besu-port))})
+   :besu-port (try-parse-int (env :besu-port))
+   :besu-validators-file (env :besu-validators-file)
+   :besu-genesis-file (env :besu-genesis-file)})
 
 (defn from-edn
   [path]
@@ -36,3 +38,6 @@
   (merge-with discard-nils
               (from-edn "dev.edn")
               (from-env)))
+
+(def prod
+  (from-env))

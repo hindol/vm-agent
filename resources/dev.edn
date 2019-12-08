@@ -1,2 +1,4 @@
 {:besu-host "localhost"
- :besu-port 8545}
+ :besu-port 8545
+ :besu-validators-file "/etc/besu/seed-validators.json"
+ :besu-genesis-file "/etc/besu/genesis.json"}
