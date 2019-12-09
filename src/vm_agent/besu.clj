@@ -101,7 +101,7 @@
   ```"
   {:name ::read-address
    :enter (fn [context]
-            (assoc context :response {:status 200 :body (slurp "/etc/besu/address")}))})
+            (assoc context :response {:status 200 :body (slurp (:besu-address-file config/dev))}))})
 
 (def read-enode-url
   "Returns the enode URL.
