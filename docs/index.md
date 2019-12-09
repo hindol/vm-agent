@@ -175,7 +175,7 @@ a-map                                ;; => {:one 1 :two 2 :three 3}
 (let [x 10]
   (println "x is: " x)) ;; => x is: 10
 
-(println "x is: " x)      ;; Unable to resolve symbol: x in this context
+(println "x is: " x)    ;; Unable to resolve symbol: x in this context
 ```
 
 - Like `def` but the binding is only available within the form `(let ...)`.
