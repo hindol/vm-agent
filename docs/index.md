@@ -197,7 +197,3 @@ a-map                                ;; => {:one 1 :two 2 :three 3}
 - `(< 0 x 11)` => Check if `x` is between 0 and 11 (both exclusive).
 - `(= x y z)` => Check that `x`, `y` and `z` are all equal.
 - Most operators in Clojure allow more than two operands.
-
-### Type when It's (Really) Needed (clojure.spec)
-
-### Can we Now Understand Clojure Code in the Wild?
