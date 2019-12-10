@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.hindol</groupId>
+  <artifactId>vm-agent</artifactId>
+  <version>0.1.0</version>
+  <name>vm-agent</name>
+
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+
+    <resources>
+      <resource>
+        <directory>src</directory>
+      </resource>
+      <resource>
+        <directory>resources</directory>
+      </resource>
+    </resources>
+  </build>
+
+  <repositories>
+    <repository>
+      <id>clojars</id>
+      <url>https://clojars.org/repo</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.clojure</groupId>
+      <artifactId>clojure</artifactId>
+      <version>1.10.1</version>
+    </dependency>
+    <dependency>
+      <groupId>io.pedestal</groupId>
+      <artifactId>pedestal.jetty</artifactId>
+      <version>0.5.7</version>
+    </dependency>
+    <dependency>
+      <groupId>io.pedestal</groupId>
+      <artifactId>pedestal.service</artifactId>
+      <version>0.5.7</version>
+    </dependency>
+    <dependency>
+      <groupId>clj-http</groupId>
+      <artifactId>clj-http</artifactId>
+      <version>3.10.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.7.28</version>
+    </dependency>
+    <dependency>
+      <groupId>environ</groupId>
+      <artifactId>environ</artifactId>
+      <version>1.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>cheshire</groupId>
+      <artifactId>cheshire</artifactId>
+      <version>5.9.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.pedestal</groupId>
+      <artifactId>pedestal.route</artifactId>
+      <version>0.5.7</version>
+    </dependency>
+  </dependencies>
+
+  <distributionManagement>
+    <repository>
+      <id>clojars</id>
+      <name>Clojars repository</name>
+      <url>https://clojars.org/repo</url>
+    </repository>
+  </distributionManagement>
+
+  <description>An agent for the cloud.</description>
+  <url>https://github.com/hindol/vm-agent</url>
+
+  <licenses>
+    <license>
+      <name>Unlicense</name>
+      <url>https://unlicense.org/</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <url>https://github.com/hindol/vm-agent</url>
+  </scm>
+</project>
