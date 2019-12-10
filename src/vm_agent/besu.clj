@@ -25,8 +25,9 @@
 
   Example:
   ```shell
-  curl -i -H 'Accept: application/json' \\
-          http://localhost:8890/besu/genesis'
+  curl -i \\
+       -H 'Accept: application/json' \\
+       http://localhost:8890/besu/genesis'
   ```"
   {:name ::read-genesis
    :enter (fn [context]
@@ -37,11 +38,12 @@
 
   Example:
   ```shell
-  curl -i -H 'Content-Type: application/json' \\
-          -H 'Accept: application/json' \\
-          -X PUT \\
-          http://localhost:8890/besu/genesis \\
-          -d '{\"validators\":[\"0x7838e914b7d5c67b69bc29853b36ba8d86f463bc\"]}'
+  curl -i \\
+       -X PUT \\
+       -H 'Content-Type: application/json' \\
+       -H 'Accept: application/json' \\
+       -d '{\"validators\":[\"0x7838e914b7d5c67b69bc29853b36ba8d86f463bc\"]}' \\
+       http://localhost:8890/besu/genesis
   ```"
   {:name ::create-genesis
    :enter (fn [context]
@@ -54,8 +56,9 @@
 
   Example:
   ```shell
-  curl -i -H 'Accept: application/json' \\
-          http://localhost:8890/besu/block-number'
+  curl -i \\
+       -H 'Accept: application/json' \\
+       http://localhost:8890/besu/block-number'
   ```"
   {:name ::read-block-number
    :enter (fn [context]
@@ -66,8 +69,9 @@
 
   Example:
   ```shell
-  curl -i -H 'Accept: application/json' \\
-          http://localhost:8890/besu/syncing'
+  curl -i \\
+       -H 'Accept: application/json' \\
+       http://localhost:8890/besu/syncing'
   ```"
   {:name ::syncing
    :enter (fn [context]
@@ -80,8 +84,9 @@
 
   Example:
   ```shell
-  curl -i -H 'Accept: application/json' \\
-          http://localhost:8890/besu/public-key'
+  curl -i \\
+       -H 'Accept: application/json' \\
+       http://localhost:8890/besu/public-key'
   ```"
   {:name ::read-public-key
    :enter (fn [context]
@@ -96,8 +101,9 @@
 
   Example:
   ```shell
-  curl -i -H 'Accept: application/json' \\
-          http://localhost:8890/besu/address'
+  curl -i \\
+       -H 'Accept: application/json' \\
+       http://localhost:8890/besu/address'
   ```"
   {:name ::read-address
    :enter (fn [context]
@@ -141,11 +147,12 @@
 
   Example:
   ```shell
-  curl -i http://localhost:8890/besu/peers/ \\
-  -X POST \\
-  -H 'Content-Type: application/json' \\
-  -H 'Accept: application/json' \\
-  -d '{\"enode-url\":\"enode://ea26ccaf0867771ba1fec32b3589c0169910cb4917017dba940efbef1d2515ce864f93a9abc846696ebad40c81de7c74d7b2b46794a71de8f95a0d019f494ff3@127.0.0.1:30303\"}'
+  curl -i \\
+       -X POST \\
+       -H 'Content-Type: application/json' \\
+       -H 'Accept: application/json' \\
+       -d '{\"enode-url\":\"enode://ea26ccaf0867771ba1fec32b3589c0169910cb4917017dba940efbef1d2515ce864f93a9abc846696ebad40c81de7c74d7b2b46794a71de8f95a0d019f494ff3@127.0.0.1:30303\"}' \\
+       http://localhost:8890/besu/peers/
   ```"
   {:name ::add-peer
    :enter (fn [context]
@@ -157,11 +164,12 @@
 
   Example:
   ```shell
-  curl -i http://localhost:8890/besu/peers/ \\
-  -X DELETE \\
-  -H 'Content-Type: application/json' \\
-  -H 'Accept: application/json' \\
-  -d '{\"enode-url\":\"enode://ea26ccaf0867771ba1fec32b3589c0169910cb4917017dba940efbef1d2515ce864f93a9abc846696ebad40c81de7c74d7b2b46794a71de8f95a0d019f494ff3@127.0.0.1:30303\"}'
+  curl -i \\
+       -X DELETE \\
+       -H 'Content-Type: application/json' \\
+       -H 'Accept: application/json' \\
+       -d '{\"enode-url\":\"enode://ea26ccaf0867771ba1fec32b3589c0169910cb4917017dba940efbef1d2515ce864f93a9abc846696ebad40c81de7c74d7b2b46794a71de8f95a0d019f494ff3@127.0.0.1:30303\"}' \\
+       http://localhost:8890/besu/peers/
   ```"
   {:name ::remove-peer
    :enter (fn [context]
@@ -173,8 +181,9 @@
 
   Example:
   ```shell
-  curl -i -H 'Accept: application/json' \\
-          http://localhost:8890/besu/validators/'
+  curl -i \\
+       -H 'Accept: application/json' \\
+       http://localhost:8890/besu/validators/'
   ```"
   {:name ::read-validators
    :enter (fn [context]

@@ -31,8 +31,6 @@ This project features,
 
 ```shell
 curl -i \
-     -X POST \
-     -H 'Content-Type: application/json' \
      -H 'Accept: application/json' \
      http://localhost:8890/besu/block-number
 ```
@@ -47,9 +45,12 @@ curl -i \
 Currently, these APIs are exposed,
 
 ```clojure
-#{["/besu/block-number"         :get    (conj common-interceptors besu/read-block-number)]
+#{["/besu/genesis"              :get    (conj common-interceptors besu/read-genesis)]
+  ["/besu/genesis"              :put    (conj common-interceptors besu/create-genesis)]
+  ["/besu/block-number"         :get    (conj common-interceptors besu/read-block-number)]
   ["/besu/syncing"              :get    (conj common-interceptors besu/syncing)]
   ["/besu/public-key"           :get    (conj common-interceptors besu/read-public-key)]
+  ["/besu/address"              :get    (conj common-interceptors besu/read-address)]
   ["/besu/enode-url"            :get    (conj common-interceptors besu/read-enode-url)]
   ["/besu/accounts/"            :get    (conj common-interceptors besu/read-accounts)]
   ["/besu/peers/"               :get    (conj common-interceptors besu/read-peers)]
@@ -58,7 +59,7 @@ Currently, these APIs are exposed,
   ["/besu/validators/"          :get    (conj common-interceptors besu/read-validators)]
   ["/besu/validators/"          :post   (conj common-interceptors besu/add-validator)]
   ["/besu/validators/"          :delete (conj common-interceptors besu/remove-validator)]
-  ["/besu/send-raw-transaction" :post   (conj common-interceptors besu/send-raw-transaction)]}
+  ["/besu/send-raw-transaction" :post   (conj common-interceptors besu/send-raw-transaction)]
 ```
 
 Take a look at the [handlers](src/vm_agent/besu.clj). The code is well documented.
