@@ -1,4 +1,4 @@
-# VM Agent
+# VM Agent [![cljdoc badge](https://cljdoc.org/badge/com.github.hindol/vm-agent)](https://cljdoc.org/d/com.github.hindol/vm-agent/CURRENT)
 
 VM Agent is an agent that runs in an Azure VM and selectively exposes some APIs of the blockchain client running alongside it.
 
@@ -40,7 +40,7 @@ curl -i \
 1. Run Docker in a [Vagrant](https://www.vagrantup.com/) VM.
 1. Run cURL in a container that is attached to the same network.
 
-## API
+## [API Documentation](https://cljdoc.org/d/com.github.hindol/vm-agent/CURRENT)
 
 Currently, these APIs are exposed,
 
