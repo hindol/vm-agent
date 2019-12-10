@@ -1,4 +1,4 @@
-# VM Agent [![cljdoc badge](https://cljdoc.org/badge/com.github.hindol/vm-agent)](https://cljdoc.org/d/com.github.hindol/vm-agent/CURRENT)
+# VM Agent [![Clojars Project](https://img.shields.io/clojars/v/com.github.hindol/vm-agent.svg)](https://clojars.org/com.github.hindol/vm-agent) [![cljdoc badge](https://cljdoc.org/badge/com.github.hindol/vm-agent)](https://cljdoc.org/d/com.github.hindol/vm-agent/CURRENT)
 
 VM Agent is an agent that runs in an Azure VM and selectively exposes some APIs of the blockchain client running alongside it.
 
