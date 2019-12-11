@@ -1,13 +1,19 @@
 (ns vm-agent.besu
-  (:require [clojure.string :as str]
-            [cheshire.core :as json]
-            [io.pedestal.interceptor.chain :as chain]
-            [vm-agent.json-rpc :as json-rpc]
-            [vm-agent.config :as config]))
+  (:require
+   [cheshire.core :as json]
+   [clojure.string :as str]
+   [clojure.tools.logging :as log]
+   [io.pedestal.interceptor.chain :as chain]
+   [json-rpc.pedestal :as pedestal]
+   [vm-agent.config :as config]))
 
 (def ^:private ^:const url
   "HTTP[S] URL of the Besu client."
   (str "http://" (:besu-host config/dev) ":" (:besu-port config/dev)))
+
+(def ^:private ^:const connection
+  "A JSON-RPC connection."
+  (json-rpc/connect url))
 
 (defn- enode-url->public-key
   [enode-url]
@@ -19,6 +25,22 @@
   (if (str/starts-with? address "0x")
     (subs address 2)
     address))
+
+(defn- emplace
+  [context connection method & params]
+  (update context :request
+          assoc
+          :json-rpc-connection connection
+          :json-rpc-method     method
+          :json-rpc-params     params))
+
+(defn- cleanup
+  [context]
+  (update context :request
+          dissoc
+          :json-rpc-connection
+          :json-rpc-method
+          :json-rpc-params))
 
 (def read-genesis
   "Returns the genesis.json file.
@@ -62,7 +84,9 @@
   ```"
   {:name ::read-block-number
    :enter (fn [context]
-            (chain/enqueue* context (json-rpc/interceptor url "eth_blockNumber")))})
+            (let [context (emplace context connection "eth_blockNumber")]
+              (chain/enqueue* context pedestal/json-rpc)))
+   :leave cleanup})
 
 (def syncing
   "Returns an object with data about the synchronization status, or false if not synchronizing.
@@ -75,7 +99,9 @@
   ```"
   {:name ::syncing
    :enter (fn [context]
-            (chain/enqueue* context (json-rpc/interceptor url "eth_syncing")))})
+            (let [context (emplace context connection "eth_syncing")]
+              (chain/enqueue* context pedestal/json-rpc)))
+   :leave cleanup})
 
 (def read-public-key
   "Returns the node public key.
@@ -90,11 +116,14 @@
   ```"
   {:name ::read-public-key
    :enter (fn [context]
-            (chain/enqueue* context (json-rpc/interceptor url "net_enode")))
+            (let [context (emplace context connection "net_enode")]
+              (chain/enqueue* context pedestal/json-rpc)))
    :leave (fn [context]
-            (let [{{enode-url :result} :response} context
+            (let [enode-url  (get-in context [:response :body :result])
                   public-key (enode-url->public-key enode-url)]
-              (assoc-in context [:response :result] public-key)))})
+              (-> context
+                  (assoc-in [:response :body :result] public-key)
+                  (cleanup))))})
 
 (def read-address
   "Returns the node address.
@@ -118,7 +147,9 @@
   ```"
   {:name ::read-enode-url
    :enter (fn [context]
-            (chain/enqueue* context (json-rpc/interceptor url "net_enode")))})
+            (let [context (emplace context connection "net_enode")]
+              (chain/enqueue* context pedestal/json-rpc)))
+   :leave cleanup})
 
 (def read-accounts
   "Returns a list of account addresses that the client owns.
@@ -129,7 +160,9 @@
   ```"
   {:name ::read-accounts
    :enter (fn [context]
-            (chain/enqueue* context (json-rpc/interceptor url "eth_accounts")))})
+            (let [context (emplace context connection "eth_accounts")]
+              (chain/enqueue* context pedestal/json-rpc)))
+   :leave cleanup})
 
 (def read-peers
   "Returns networking information about connected remote nodes.
@@ -140,7 +173,9 @@
   ```"
   {:name ::read-peers
    :enter (fn [context]
-            (chain/enqueue* context (json-rpc/interceptor url "admin_peers")))})
+            (let [context (emplace context connection "admin_peers")]
+              (chain/enqueue* context pedestal/json-rpc)))
+   :leave cleanup})
 
 (def add-peer
   "Adds a static node.
@@ -156,8 +191,10 @@
   ```"
   {:name ::add-peer
    :enter (fn [context]
-            (let [{{{enode-url :enode-url} :json-params} :request} context]
-              (chain/enqueue* context (json-rpc/interceptor url "admin_addPeer" enode-url))))})
+            (let [{{{enode-url :enode-url} :json-params} :request} context
+                  context (emplace context connection "admin_addPeer" enode-url)]
+              (chain/enqueue* context pedestal/json-rpc)))
+   :leave cleanup})
 
 (def remove-peer
   "Removes a static node.
@@ -173,8 +210,10 @@
   ```"
   {:name ::remove-peer
    :enter (fn [context]
-            (let [{{{enode-url :enode-url} :json-params} :request} context]
-              (chain/enqueue* context (json-rpc/interceptor url "admin_removePeer" enode-url))))})
+            (let [{{{enode-url :enode-url} :json-params} :request} context
+                  context (emplace context connection "admin_removePeer" enode-url)]
+              (chain/enqueue* context pedestal/json-rpc)))
+   :leave cleanup})
 
 (def read-validators
   "Lists the validators defined in the latest block.
@@ -187,29 +226,33 @@
   ```"
   {:name ::read-validators
    :enter (fn [context]
-            (chain/enqueue* context
-                            (json-rpc/interceptor url "ibft_getValidatorsByBlockNumber" "latest")))})
+            (let [context (emplace context connection "ibft_getValidatorsByBlockNumber" "latest")]
+              (chain/enqueue* context pedestal/json-rpc)))
+   :leave cleanup})
 
 (def add-validator
   "Proposes adding a validator with the specified address."
   {:name ::add-validator
    :enter (fn [context]
-            (let [{{{enode-address :enode-url} :json-params} :request} context]
-              (chain/enqueue* context
-                              (json-rpc/interceptor url "ibft_proposeValidatorVote" enode-address true))))})
+            (let [{{{enode-address :enode-url} :json-params} :request} context
+                  context (emplace context connection "ibft_proposeValidatorVote" enode-address true)]
+              (chain/enqueue* context pedestal/json-rpc)))
+   :leave cleanup})
 
 (def remove-validator
   "Proposes removing a validator with the specified address."
   {:name ::remove-validator
    :enter (fn [context]
-            (let [{{{enode-address :enode-url} :json-params} :request} context]
-              (chain/enqueue* context
-                              (json-rpc/interceptor url "ibft_proposeValidatorVote" enode-address false))))})
+            (let [{{{enode-address :enode-url} :json-params} :request} context
+                  context (emplace context connection "ibft_proposeValidatorVote" enode-address false)]
+              (chain/enqueue* context pedestal/json-rpc)))
+   :leave cleanup})
 
 (def send-raw-transaction
   "Sends a signed transaction. A transaction can send ether, deploy a contract, or interact with a contract."
   {:name ::send-raw-transaction
    :enter (fn [context]
-            (let [{{{transaction :enode-url} :json-params} :request} context]
-              (chain/enqueue* context
-                              (json-rpc/interceptor url "eth_sendRawTransaction" transaction))))})
+            (let [{{{transaction :enode-url} :json-params} :request} context
+                  context (emplace context connection "eth_sendRawTransaction" transaction)]
+              (chain/enqueue* context pedestal/json-rpc)))
+   :leave cleanup})

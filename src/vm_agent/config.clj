@@ -20,6 +20,7 @@
   []
   {:besu-host (env :besu-host)
    :besu-port (try-parse-int (env :besu-port))
+   :besu-address-file (env ::besu-address-file)
    :besu-validators-file (env :besu-validators-file)
    :besu-genesis-file (env :besu-genesis-file)})
 

@@ -1,12 +1,18 @@
-{:deps    {io.pedestal/pedestal.service {:mvn/version "0.5.7"}
-           io.pedestal/pedestal.route   {:mvn/version "0.5.7"}
-           io.pedestal/pedestal.jetty   {:mvn/version "0.5.7"}
-           environ                      {:mvn/version "1.1.0"}
-           clj-http                     {:mvn/version "3.10.0"}
-           cheshire                     {:mvn/version "5.9.0"}
-           org.slf4j/slf4j-simple       {:mvn/version "1.7.28"}}
+{:deps    {json-rpc                         {:local/root "/home/hiadhy/Code/json-rpc"}
+           io.pedestal/pedestal.service     {:mvn/version "0.5.7"}
+           io.pedestal/pedestal.route       {:mvn/version "0.5.7"}
+           io.pedestal/pedestal.jetty       {:mvn/version "0.5.7"}
+           io.pedestal/pedestal.interceptor {:mvn/version "0.5.7"}
+           environ                          {:mvn/version "1.1.0"}
+           cheshire                         {:mvn/version "5.9.0"}
+           org.clojure/tools.logging        {:mvn/version "0.5.0"}
+           org.slf4j/slf4j-simple           {:mvn/version "1.7.28"}}
  :paths   ["src" "resources"]
- :aliases {:test {:extra-paths ["test"]
+ :aliases {:dev  {:jvm-opts ["-Dorg.slf4j.simpleLogger.defaultLogLevel=info"
+                             "-Dorg.slf4j.simpleLogger.log.io.pedestal=debug"
+                             "-Dorg.slf4j.simpleLogger.log.json-rpc=trace"
+                             "-Dorg.slf4j.simpleLogger.log.vm-agent=trace"]}
+           :test {:extra-paths ["test"]
                   :extra-deps  {com.cognitect/test-runner
                                 {:git/url "https://github.com/cognitect-labs/test-runner.git"
                                  :sha     "209b64504cb3bd3b99ecfec7937b358a879f55c1"}}

@@ -1,6 +1,7 @@
 (ns vm-agent.content-negotiation
-  (:require [cheshire.core :as json]
-            [io.pedestal.http.content-negotiation :as conneg]))
+  (:require
+   [cheshire.core :as json]
+   [io.pedestal.http.content-negotiation :as conneg]))
 
 (def supported-types ["text/html" "application/edn" "application/json" "text/plain"])
 
@@ -31,5 +32,6 @@
   {:name  ::coerce-body
    :leave (fn [context]
             (cond-> context
+              ;; If Content-Type header is unset, coerce body and set Content-Type.
               (nil? (get-in context [:response :headers "Content-Type"]))
               (update-in [:response] coerce-to (accepted-type context))))})
