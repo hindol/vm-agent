@@ -1,4 +1,4 @@
-{:deps    {json-rpc                         {:local/root "/home/hiadhy/Code/json-rpc"}
+{:deps    {com.github.hindol/json-rpc       {:mvn/version "0.1.0-SNAPSHOT"}
            io.pedestal/pedestal.service     {:mvn/version "0.5.7"}
            io.pedestal/pedestal.route       {:mvn/version "0.5.7"}
            io.pedestal/pedestal.jetty       {:mvn/version "0.5.7"}
