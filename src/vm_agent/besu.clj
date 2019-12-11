@@ -2,7 +2,6 @@
   (:require
    [cheshire.core :as json]
    [clojure.string :as str]
-   [clojure.tools.logging :as log]
    [io.pedestal.interceptor.chain :as chain]
    [json-rpc.pedestal :as pedestal]
    [vm-agent.config :as config]))

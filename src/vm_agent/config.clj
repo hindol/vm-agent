@@ -1,6 +1,7 @@
 (ns vm-agent.config
   (:require [clojure.java.io :as io]
             [clojure.edn :as edn]
+            [clojure.tools.logging :as log]
             [environ.core :refer [env]]))
 
 (defn- str->int
@@ -36,9 +37,11 @@
   (if (nil? b) a b))
 
 (def dev
-  (merge-with discard-nils
-              (from-edn "dev.edn")
-              (from-env)))
+  (log/spyf "config => %s"
+            (merge-with discard-nils
+                        (from-edn "dev.edn")
+                        (from-env))))
 
 (def prod
-  (from-env))
+  (log/spyf "config => %s"
+            (from-env)))
