@@ -52,7 +52,8 @@
   ```"
   {:name ::read-genesis
    :enter (fn [context]
-            (assoc context :response {:status 200 :body (slurp (:besu-genesis-file config/dev))}))})
+            (assoc context :response {:status 200
+                                      :body {:result (slurp (:besu-genesis-file config/dev))}}))})
 
 (def create-genesis
   "Seeds the genesis.json with initial set of validators.
@@ -135,7 +136,8 @@
   ```"
   {:name ::read-address
    :enter (fn [context]
-            (assoc context :response {:status 200 :body (slurp (:besu-address-file config/dev))}))})
+            (assoc context :response {:status 200
+                                      :body {:result (slurp (:besu-address-file config/dev))}}))})
 
 (def read-enode-url
   "Returns the enode URL.
