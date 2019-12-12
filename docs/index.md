@@ -1,8 +1,6 @@
-# VM Agent
+# Clojure in 15 Minutes
 
-## Clojure in 15 Minutes
-
-### Hello, Clojure!
+## Hello, Clojure!
 
 ```clojure
 (println "Hello, world!")
@@ -15,7 +13,7 @@
 - `(` comes before the function, not after.
 - `(x y z)` => Call function `x` with two arguments, `y` and `z`.
 
-### Arithmetic
+## Arithmetic
 
 ```clojure
 (+ 1 2 3 4 5)  ;; => 15
@@ -30,7 +28,7 @@
 - Arithmetic operators in Clojure support more than two operands.
 - `(f (g x))` => Call function `g` with argument `x`. Then call function `f` with the result of the previous function as argument.
 
-### Vectors & Sets
+## Vectors & Sets
 
 ```clojure
 [1 "two" 3.0]         ;; => A vector
@@ -45,7 +43,7 @@
 - Functions that return `true/false` usually end in a `?`. However, this is not enforced.
 - A set is also a function(!)
 
-### Maps
+## Maps
 
 ```clojure
 {:one 1 :two 2.0 :three "three"}        ;; A map
@@ -55,7 +53,7 @@
 - Symbols starting with `:` are keywords. Think `enums` or named strings. Keywords are primarily used as map keys.
 - Keywords are also functions(!)
 
-### Symbols
+## Symbols
 
 ```clojure
 (def x 10)
@@ -65,7 +63,7 @@
 - `10` is a value.
 - `def` *binds* a symbol to a value.
 
-### Functions
+## Functions
 
 ```clojure
 (fn [x] (* x x))     ;; A function without a name
@@ -74,14 +72,14 @@
 
 - `((fn [x] (* x x)) 2)` => Call function `(fn [x] (* x x))` with the argument `2`.
 
-### Give that Function a Name
+## Give that Function a Name
 
 ```clojure
 (def square (fn [x] (* x x))) ;; Bind the symbol "square" to a function
 (square 2)                    ;; => 4
 ```
 
-### Macros
+## Macros
 
 ```clojure
 (defn square [x] (* x x))
@@ -100,7 +98,7 @@
 - The thread-first macro `(->)` threads the previous result as the *first* parameter of the next function.
 - Similarly, the thead-last macro `(->>)` threads the previous result as the *last* parameter of the next function.
 
-### The Essence of a Functional Language, [Pure Functions](https://en.wikipedia.org/wiki/Pure_function)
+## The Essence of a Functional Language, [Pure Functions](https://en.wikipedia.org/wiki/Pure_function)
 
 *Definition:* A function that has no side-effects. Calling the function any number of times with the same input value will give the same output value.
 
@@ -109,7 +107,7 @@
 - Printing to the console *is* a side-effect. It changes the state of `stdout`. So is writing to a file.
 - Clojure is built around pure functions.
 
-#### Example
+### Example
 
 ```clojure
 (def a-vector [1 "two" 3.0])
@@ -127,7 +125,7 @@ a-map                                ;; => {:one 1 :two 2 :three 3}
 
 - `assoc`(iate) takes a map, adds an entry and returns *another* map. The original map is not modified.
 
-### Map, Filter & Reduce
+## Map, Filter & Reduce
 
 ```clojure
 (defn root-mean-square
@@ -148,7 +146,7 @@ a-map                                ;; => {:one 1 :two 2 :three 3}
 (filter odd? [1 2 3 4 5 6 7 8 9 10]) ;; => [1 3 5 7 9]
 ```
 
-### If & When
+## If & When
 
 ```clojure
 (if   true  "true" "false") ;; => "true"
@@ -159,7 +157,7 @@ a-map                                ;; => {:one 1 :two 2 :three 3}
 - Use `when` otherwise.
 - `nil` is what `null` is in other languages or `None` in Python.
 
-### Cond
+## Cond
 
 ```clojure
 (cond
@@ -169,7 +167,7 @@ a-map                                ;; => {:one 1 :two 2 :three 3}
 
 - `cond` is what `switch/case` is in other languages.
 
-### Local Bindings
+## Local Bindings
 
 ```clojure
 (let [x 10]
@@ -180,7 +178,7 @@ a-map                                ;; => {:one 1 :two 2 :three 3}
 
 - Like `def` but the binding is only available within the form `(let ...)`.
 
-### Loop & Recur
+## Loop & Recur
 
 ```clojure
 (defn factorial
