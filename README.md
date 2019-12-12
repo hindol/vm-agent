@@ -66,4 +66,4 @@ Take a look at the [handlers](src/vm_agent/besu.clj). The code is well documente
 
 ## Clojure Crash Course
 
-Check out [Clojure in 15 Minutes](https://hindol.github.io/vm-agent/#clojure-in-15-minutes).
+Check out [Clojure in 15 Minutes](https://gist.github.com/Hindol/727eb69e9943b371e66902c19960fd0c).
