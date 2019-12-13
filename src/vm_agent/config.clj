@@ -20,7 +20,8 @@
 (defn from-env
   []
   {:besu-host (env :besu-host)
-   :besu-port (try-parse-int (env :besu-port))
+   :besu-http-port (try-parse-int (env :besu-http-port))
+   :besu-ws-port (try-parse-int (env :besu-ws-port))
    :besu-address-file (env ::besu-address-file)
    :besu-validators-file (env :besu-validators-file)
    :besu-genesis-file (env :besu-genesis-file)})

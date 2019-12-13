@@ -8,7 +8,7 @@
 
 (def ^:private ^:const url
   "HTTP[S] URL of the Besu client."
-  (str "http://" (:besu-host config/dev) ":" (:besu-port config/dev)))
+  (str "http://" (:besu-host config/dev) ":" (:besu-http-port config/dev)))
 
 (def ^:private ^:const connection
   "A JSON-RPC connection."
