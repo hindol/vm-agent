@@ -8,7 +8,8 @@
            org.clojure/tools.logging        {:mvn/version "0.5.0"}
            org.slf4j/slf4j-simple           {:mvn/version "1.7.28"}}
  :paths   ["src" "resources"]
- :aliases {:dev  {:jvm-opts ["-Dorg.slf4j.simpleLogger.defaultLogLevel=info"
+ :aliases {:dev  {:jvm-opts ["-Dclojure.compile.warn-on-reflection=true"
+                             "-Dorg.slf4j.simpleLogger.defaultLogLevel=info"
                              "-Dorg.slf4j.simpleLogger.log.io.pedestal=debug"
                              "-Dorg.slf4j.simpleLogger.log.json-rpc=trace"
                              "-Dorg.slf4j.simpleLogger.log.vm-agent=trace"]}

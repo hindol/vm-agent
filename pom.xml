@@ -4,7 +4,7 @@
   <groupId>com.github.hindol</groupId>
   <artifactId>vm-agent</artifactId>
   <version>0.1.0</version>
-  <name>vm-agent</name>
+  <name>VM Agent</name>
 
   <build>
     <sourceDirectory>src</sourceDirectory>
